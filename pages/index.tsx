@@ -3,32 +3,28 @@ import { useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 
 export default function Home() {
-  const [todoItem, setTodoItem] = useState('');
-  const [todoItemDesc, setTodoItemDesc] = useState('')
+  const [userInput, setUserInput] = useState('');
+  const [nameList, setNameList] = useState([]);
 
-  const [items, setItems] = useState([
-    {
-      id: '1',
-      title: 'Iphone 7',
-      description: 'good'
-    }
-  ]);
+  const handleChange = (e) => {
+    e.preventDefault()
 
-  const handleAdd = () => {
-    if (todoItem && todoItemDesc) {
-      setItems([
-        {
-          id: uuidv4(),
-          title: todoItem,
-          description: todoItemDesc
-        },
-        ...items
-      ]);
+    setUserInput(e.target.value)
+  }
 
-      setTodoItem(""),
-        setTodoItemDesc("")
-    }
+  const addName = () => {
+    setNameList([
+      userInput,
+      ...nameList
+    ])
 
+    setUserInput('')
+  }
+
+  const handleDelete = (name) => {
+    const updatedNames = nameList.filter((currentName, idx) => nameList.indexOf(currentName) != nameList.indexOf(name))
+
+    setNameList(updatedNames)
   }
 
   return (
@@ -41,29 +37,38 @@ export default function Home() {
       </Head>
       <main>
         <div>
-          <h1>Phones Specifications</h1>
           <div>
-            <input
-              type="text"
-              value={todoItem}
-              onChange={(e) => setTodoItem(e.target.value)}
+            <input type="text"
+              value={userInput}
+              onChange={handleChange}
+              placeholder='Add new name'
             />
-            <input
-              type="text"
-              value={todoItemDesc}
-              onChange={(e) => setTodoItemDesc(e.target.value)}
-            />
-            <button onClick={handleAdd}>Add Phone</button>
+            <button onClick={(e) => {
+              e.preventDefault
+              addName()
+            }}
+            >
+              Add Name
+            </button>
           </div>
-          <ul>
-            {items.map(({ id, title, description }) => (
-              <div key={id}>
-                <h1>{title}</h1>
-                <p>{description}</p>
-                <button>Delete</button>
-              </div>
-            ))}
-          </ul>
+          {
+            nameList.length >= 1 ? nameList.map((name, idx) => {
+              return (
+                // eslint-disable-next-line react/jsx-key
+                <div>
+                  <div key={idx}>
+                    <h1>{name}</h1>
+                    <p>je sui vraiment ct</p>
+                  </div>
+                  <button onClick={(e) => {
+                    e.preventDefault
+                    handleDelete(name)
+                  }}>Delete</button>
+                </div>
+              )
+            })
+              : ''
+          }
         </div>
       </main>
     </>
