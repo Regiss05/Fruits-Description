@@ -4,26 +4,29 @@ import { v4 as uuidv4 } from 'uuid'
 
 export default function Home() {
   const [todoItem, setTodoItem] = useState('');
+  const [todoItemDesc, setTodoItemDesc] = useState('')
+
   const [items, setItems] = useState([
     {
       id: '1',
-      message: 'Iphone 7',
-      done: false,
+      title: 'Iphone 7',
+      description: 'good'
     }
   ]);
 
   const handleAdd = () => {
-    if (todoItem) {
+    if (todoItem && todoItemDesc) {
       setItems([
         {
           id: uuidv4(),
-          message: todoItem,
-          done: false,
+          title: todoItem,
+          description: todoItemDesc
         },
         ...items
       ]);
 
-      setTodoItem("")
+      setTodoItem(""),
+        setTodoItemDesc("")
     }
 
   }
@@ -45,11 +48,20 @@ export default function Home() {
               value={todoItem}
               onChange={(e) => setTodoItem(e.target.value)}
             />
+            <input
+              type="text"
+              value={todoItemDesc}
+              onChange={(e) => setTodoItemDesc(e.target.value)}
+            />
             <button onClick={handleAdd}>Add Phone</button>
           </div>
           <ul>
-            {items.map(({ id, message} ) => (
-              <li key={id}>{message}</li>
+            {items.map(({ id, title, description }) => (
+              <div key={id}>
+                <h1>{title}</h1>
+                <p>{description}</p>
+                <button>Delete</button>
+              </div>
             ))}
           </ul>
         </div>
