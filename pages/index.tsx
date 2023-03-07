@@ -1,3 +1,5 @@
+// eslint-disable-next-line
+
 import Head from 'next/head'
 import { SetStateAction, useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
@@ -6,8 +8,13 @@ import SearchBar from './SearchBar';
 
 export default function Home() {
   const [userInput, setUserInput] = useState('');
-  const [nameList, setNameList] = useState([]);
-  const usertype = userInput
+  const [nameList, setNameList] = useState([
+    {
+      id: '123',
+      name: 'regiss mukubiza'
+    }
+    
+  ]);
 
   const handleChange = (e: { preventDefault: () => void; target: { value: SetStateAction<string>; }; }) => {
     e.preventDefault()
@@ -18,7 +25,11 @@ export default function Home() {
   const addName = () => {
     if (userInput) {
       setNameList([
-        userInput,
+        {
+          id: uuidv4(),
+          name: userInput,
+        },
+        // userInput,
         ...nameList,
       ])
 
@@ -27,8 +38,8 @@ export default function Home() {
 
   }
 
-  const handleDelete = (name: never) => {
-    const updatedNames = nameList.filter((currentName, idx) => nameList.indexOf(currentName) != nameList.indexOf(name))
+  const handleDelete = (list:never) => {
+    const updatedNames = nameList.filter((currentName, idx) => nameList.indexOf(currentName) != nameList.indexOf(list))
 
     setNameList(updatedNames)
   }
@@ -64,26 +75,25 @@ export default function Home() {
             </div>
             <div className=''>
               {
-                nameList.length >= 1 ? nameList.map((name, idx) => {
+                nameList.map((list, idx) => {
                   return (
                     // eslint-disable-next-line react/jsx-key
                     <div className='border'>
                       <div key={idx}>
-                        <h1 className=''>{name}</h1>
+                        <h1 className=''>{list.name}</h1>
                       </div>
                       <Link href="/items"
                         className='class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"'
                       >View</Link>
                       <button onClick={(e) => {
                         e.preventDefault
-                        handleDelete(name)
+                        handleDelete(list)
                       }}
                         className='type="button" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900'
                       >Delete</button>
                     </div>
                   )
                 })
-                  : ''
               }
             </div>
           </div>
