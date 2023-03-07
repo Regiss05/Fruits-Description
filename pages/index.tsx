@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-key */
 // eslint-disable-next-line
 
 import Head from 'next/head'
@@ -16,7 +17,7 @@ export default function Home() {
       name: 'Orange',
       description: 'An orange is a fruit of various citrus species in the family Rutaceae (see list of plants known as orange); it primarily refers to Citrus × sinensis,[1] which is also called sweet orange, to distinguish it from the related Citrus × aurantium, referred to as bitter orange. '
     }
-    
+
   ]);
 
   const addName = () => {
@@ -79,30 +80,43 @@ export default function Home() {
                 Add Name
               </button>
             </div>
-            <div className=''>
-              {
-                nameList.map((list, idx) => {
-                  return (
-                    // eslint-disable-next-line react/jsx-key
-                    <div className='border'>
-                      <div key={idx}>
-                        <h1 className='uppercase font-extrabold'>{list.name}</h1>
-                        <p className='font-thin text-xs p-5'>{list.description}</p>
-                      </div>
-                      <Link href="/items"
-                        className='class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"'
-                      >View</Link>
-                      <button onClick={(e) => {
-                        e.preventDefault
-                        handleDelete(list)
-                      }}
-                        className='type="button" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900'
-                      >Delete</button>
+          </div>
+          <h1 className='font-bold my-5'>FRUITS SPECIFICATIONS</h1>
+          <div className='flex flex-wrap justify-center'>
+            {
+              nameList.map((list, idx) => {
+                return (
+                  <div className="card-w rounded overflow-hidden shadow-lg mr-2 mt-2">
+                    <img className="w-full h-40" src="https://thumbs.dreamstime.com/z/fresh-fruits-assorted-colorful-clean-eating-fruit-background-138466607.jpg" alt="Sunset in the mountains" />
+                    <div className="px-6 py-4" key={idx}>
+                      <div className="font-bold text-xl mb-2 uppercase">{list.name}</div>
+                      <p className="font-thin text-xs px-5">
+                        {list.description}
+                      </p>
                     </div>
-                  )
-                })
-              }
-            </div>
+                    <div className="px-6 mb-4">
+                      <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#Enjoy</span>
+                      <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#Quality</span>
+                      <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#Health</span>
+                      <div>
+                        <Link href="/items"
+                          className='class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"'
+                          key={idx}
+
+                        >View</Link>
+                        <button onClick={(e) => {
+                          e.preventDefault
+                          handleDelete(list)
+                        }}
+                          className='type="button" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900'
+                        >Delete</button>
+                      </div>
+
+                    </div>
+                  </div>
+                )
+              })
+            }
           </div>
         </div>
       </main>
