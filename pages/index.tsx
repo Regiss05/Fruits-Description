@@ -1,7 +1,7 @@
 // eslint-disable-next-line
 
 import Head from 'next/head'
-import { SetStateAction, useState } from 'react'
+import { useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 import Link from 'next/link';
 import SearchBar from './SearchBar';
@@ -13,14 +13,14 @@ export default function Home() {
   const [nameList, setNameList] = useState([
     {
       id: '123',
-      name: 'regiss mukubiza',
-      description: 'I need to get this fourniture'
+      name: 'Orange',
+      description: 'An orange is a fruit of various citrus species in the family Rutaceae (see list of plants known as orange); it primarily refers to Citrus × sinensis,[1] which is also called sweet orange, to distinguish it from the related Citrus × aurantium, referred to as bitter orange. '
     }
     
   ]);
 
   const addName = () => {
-    if (userInput) {
+    if (userInput && desInput) {
       setNameList([
         {
           id: uuidv4(),
@@ -36,7 +36,7 @@ export default function Home() {
 
   }
 
-  const handleDelete = (list:never) => {
+  const handleDelete = (list: { id: string; name: string; description: string; }) => {
     const updatedNames = nameList.filter((currentName, idx) => nameList.indexOf(currentName) != nameList.indexOf(list))
 
     setNameList(updatedNames)
@@ -87,7 +87,7 @@ export default function Home() {
                     <div className='border'>
                       <div key={idx}>
                         <h1 className='uppercase font-extrabold'>{list.name}</h1>
-                        <p className='font-thin'>{list.description}</p>
+                        <p className='font-thin text-xs p-5'>{list.description}</p>
                       </div>
                       <Link href="/items"
                         className='class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"'
