@@ -11,6 +11,21 @@ export default function Home() {
   const [userInput, setUserInput] = useState('');
   const [desInput, setDesInput] = useState('')
 
+
+  const [name, setName] = useState('');
+
+  // const USERS = [
+  //   { id: 1, name: 'Andy', age: 32 },
+  //   { id: 2, name: 'Bob', age: 30 },
+  //   { id: 3, name: 'Tom Hulk', age: 40 },
+  //   { id: 4, name: 'Tom Hank', age: 50 },
+  //   { id: 5, name: 'Audra', age: 30 },
+  //   { id: 6, name: 'Anna', age: 68 },
+  //   { id: 7, name: 'Tom', age: 34 },
+  //   { id: 8, name: 'Tom Riddle', age: 28 },
+  //   { id: 9, name: 'Bolo', age: 23 },
+  // ];
+
   const [nameList, setNameList] = useState([
     {
       id: '123',
@@ -19,6 +34,25 @@ export default function Home() {
     }
 
   ]);
+
+  const [foundUsers, setFoundUsers] = useState(nameList);
+
+  const filter = (e) => {
+    const keyword = e.target.value;
+
+    if (keyword !== '') {
+      const results = nameList.filter((user) => {
+        return user.name.toLowerCase().startsWith(keyword.toLowerCase());
+        // Use the toLowerCase() method to make it case-insensitive
+      });
+      setFoundUsers(results);
+    } else {
+      setFoundUsers(nameList);
+      // If the text field is empty, show all users
+    }
+
+    setName(keyword);
+  };
 
   const addName = () => {
     if (userInput && desInput) {
@@ -54,7 +88,45 @@ export default function Home() {
       <main>
         <div className="flex flex-col justify-center items-center">
           <div className='w-2/4 text-center bg-primary'>
-            <SearchBar />
+            <div className="container">
+              {/* <input
+                type="search"
+                value={name}
+                onChange={filter}
+                className="input"
+                placeholder="Filter"
+              /> */}
+              <form>
+                <label htmlFor="default-search" className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
+                <div className="relative">
+                  <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                    <svg aria-hidden="true" className="w-5 h-5 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                  </div>
+                  <input
+                    type="search"
+                    id="default-search"
+                    className="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="Search ..."
+                    value={name}
+                    onChange={filter}
+                    required />
+                  <button type="submit" className="text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button>
+                </div>
+              </form>
+
+              <div className="user-list">
+                {foundUsers && foundUsers.length > 0 ? (
+                  foundUsers.map((user) => (
+                    <li key={user.id} className="user">
+                      <span className="user-name">{user.name}</span>
+                    </li>
+                  ))
+                ) : (
+                  <h1>No results found!</h1>
+                )}
+              </div>
+            </div>
+            {/* <SearchBar /> */}
             <h1 className='text-2xl my-5'>ADD STOCK</h1>
             <div>
               <input type="text"
