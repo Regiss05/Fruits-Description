@@ -8,7 +8,7 @@ export default function Home() {
   const [userInput, setUserInput] = useState('');
   const [nameList, setNameList] = useState([]);
 
-  const handleChange = (e) => {
+  const handleChange = (e: { preventDefault: () => void; target: { value: SetStateAction<string>; }; }) => {
     e.preventDefault()
 
     setUserInput(e.target.value)
@@ -26,7 +26,7 @@ export default function Home() {
 
   }
 
-  const handleDelete = (name) => {
+  const handleDelete = (name: never) => {
     const updatedNames = nameList.filter((currentName, idx) => nameList.indexOf(currentName) != nameList.indexOf(name))
 
     setNameList(updatedNames)
