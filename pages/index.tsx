@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import { useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
+import Link from 'next/link';
 
 export default function Home() {
   const [userInput, setUserInput] = useState('');
@@ -13,12 +14,15 @@ export default function Home() {
   }
 
   const addName = () => {
-    setNameList([
-      userInput,
-      ...nameList
-    ])
-
-    setUserInput('')
+    if (setNameList){
+      setNameList([
+        userInput,
+        ...nameList
+      ])
+  
+      setUserInput('')
+    }
+   
   }
 
   const handleDelete = (name) => {
@@ -36,17 +40,21 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <div>
+      <div class="flex flex-col justify-center items-center">
+        <div className='w-2/4 text-center bg-primary'>
+          <h1 className='text-2xl my-5'>ADD STOCK</h1>
           <div>
             <input type="text"
               value={userInput}
               onChange={handleChange}
               placeholder='Add new name'
+              className=' block w-full p-2.5'
             />
             <button onClick={(e) => {
               e.preventDefault
               addName()
             }}
+            className='bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
             >
               Add Name
             </button>
@@ -55,20 +63,26 @@ export default function Home() {
             nameList.length >= 1 ? nameList.map((name, idx) => {
               return (
                 // eslint-disable-next-line react/jsx-key
-                <div>
+                <div className='border'>
                   <div key={idx}>
-                    <h1>{name}</h1>
-                    <p>je sui vraiment ct</p>
+                    <h1 className=''>{name}</h1>
+                    {/* <p>je sui vraiment ct</p> */}
                   </div>
+                  <Link href="/items"
+                  className='class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"'
+                  >View</Link>
                   <button onClick={(e) => {
                     e.preventDefault
                     handleDelete(name)
-                  }}>Delete</button>
+                  }}
+                  className='type="button" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900'
+                  >Delete</button>
                 </div>
               )
             })
               : ''
           }
+        </div>
         </div>
       </main>
     </>
