@@ -81,12 +81,12 @@ export default function Home() {
               </button>
             </div>
           </div>
-          <h1 className='font-bold my-5'>FRUITS IN THE STOCK</h1>
-          <div className='flex'>
+          <h1 className='font-bold my-5'>FRUITS SPECIFICATIONS</h1>
+          <div className='flex flex-wrap justify-center'>
             {
               nameList.map((list, idx) => {
                 return (
-                  <div className="max-w-sm rounded overflow-hidden shadow-lg mr-2 mt-2">
+                  <div className="card-w rounded overflow-hidden shadow-lg mr-2 mt-2">
                     <img className="w-full h-40" src="https://thumbs.dreamstime.com/z/fresh-fruits-assorted-colorful-clean-eating-fruit-background-138466607.jpg" alt="Sunset in the mountains" />
                     <div className="px-6 py-4" key={idx}>
                       <div className="font-bold text-xl mb-2 uppercase">{list.name}</div>

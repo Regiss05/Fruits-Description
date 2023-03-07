@@ -4,11 +4,11 @@
 
 @layer base{
     body {
-        @apply bg-[#F0F2F5]
+        @apply bg-[#F0F2F5];
+        margin: auto 50px;
     }
 }
 
-.elem-item {
-    /* background-color: red; */
-    transition: all ease-in-out 2s;
+.card-w {
+    width: 20rem;
 }
