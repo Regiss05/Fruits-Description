@@ -8,19 +8,16 @@ import SearchBar from './SearchBar';
 
 export default function Home() {
   const [userInput, setUserInput] = useState('');
+  const [desInput, setDesInput] = useState('')
+
   const [nameList, setNameList] = useState([
     {
       id: '123',
-      name: 'regiss mukubiza'
+      name: 'regiss mukubiza',
+      description: 'I need to get this fourniture'
     }
     
   ]);
-
-  const handleChange = (e: { preventDefault: () => void; target: { value: SetStateAction<string>; }; }) => {
-    e.preventDefault()
-
-    setUserInput(e.target.value)
-  }
 
   const addName = () => {
     if (userInput) {
@@ -28,12 +25,13 @@ export default function Home() {
         {
           id: uuidv4(),
           name: userInput,
+          description: desInput,
         },
-        // userInput,
         ...nameList,
       ])
 
       setUserInput('')
+      setDesInput('')
     }
 
   }
@@ -60,9 +58,17 @@ export default function Home() {
             <div>
               <input type="text"
                 value={userInput}
-                onChange={handleChange}
+                onChange={(e) => setUserInput(e.target.value)}
                 placeholder='Add new name'
                 className=' block w-full p-2.5'
+                required
+              />
+              <input type="text"
+                value={desInput}
+                onChange={(e) => setDesInput(e.target.value)}
+                placeholder='Description'
+                className=' block w-full p-2.5 h-40 border'
+                required
               />
               <button onClick={(e) => {
                 e.preventDefault
@@ -80,7 +86,8 @@ export default function Home() {
                     // eslint-disable-next-line react/jsx-key
                     <div className='border'>
                       <div key={idx}>
-                        <h1 className=''>{list.name}</h1>
+                        <h1 className='uppercase font-extrabold'>{list.name}</h1>
+                        <p className='font-thin'>{list.description}</p>
                       </div>
                       <Link href="/items"
                         className='class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"'
