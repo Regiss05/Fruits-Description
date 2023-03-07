@@ -1,34 +1,35 @@
 import Head from 'next/head'
-import { useState } from 'react'
+import { SetStateAction, useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
+import Link from 'next/link';
+import SearchBar from './SearchBar';
 
 export default function Home() {
-  const [todoItem, setTodoItem] = useState('');
-  const [todoItemDesc, setTodoItemDesc] = useState('')
+  const [userInput, setUserInput] = useState('');
+  const [nameList, setNameList] = useState([]);
 
-  const [items, setItems] = useState([
-    {
-      id: '1',
-      title: 'Iphone 7',
-      description: 'good'
-    }
-  ]);
+  const handleChange = (e: { preventDefault: () => void; target: { value: SetStateAction<string>; }; }) => {
+    e.preventDefault()
 
-  const handleAdd = () => {
-    if (todoItem && todoItemDesc) {
-      setItems([
-        {
-          id: uuidv4(),
-          title: todoItem,
-          description: todoItemDesc
-        },
-        ...items
-      ]);
+    setUserInput(e.target.value)
+  }
 
-      setTodoItem(""),
-        setTodoItemDesc("")
+  const addName = () => {
+    if (setNameList) {
+      setNameList([
+        userInput,
+        ...nameList
+      ])
+
+      setUserInput('')
     }
 
+  }
+
+  const handleDelete = (name: never) => {
+    const updatedNames = nameList.filter((currentName, idx) => nameList.indexOf(currentName) != nameList.indexOf(name))
+
+    setNameList(updatedNames)
   }
 
   return (
@@ -40,30 +41,52 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <div>
-          <h1>Phones Specifications</h1>
-          <div>
-            <input
-              type="text"
-              value={todoItem}
-              onChange={(e) => setTodoItem(e.target.value)}
-            />
-            <input
-              type="text"
-              value={todoItemDesc}
-              onChange={(e) => setTodoItemDesc(e.target.value)}
-            />
-            <button onClick={handleAdd}>Add Phone</button>
+        <div className="flex flex-col justify-center items-center">
+          <div className='w-2/4 text-center bg-primary'>
+            <SearchBar />
+            <h1 className='text-2xl my-5'>ADD STOCK</h1>
+            <div>
+              <input type="text"
+                value={userInput}
+                onChange={handleChange}
+                placeholder='Add new name'
+                className=' block w-full p-2.5'
+              />
+              <button onClick={(e) => {
+                e.preventDefault
+                addName()
+              }}
+                className='bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+              >
+                Add Name
+              </button>
+            </div>
+            <div className=''>
+              {
+                nameList.length >= 1 ? nameList.map((name, idx) => {
+                  return (
+                    // eslint-disable-next-line react/jsx-key
+                    <div className='border'>
+                      <div key={idx}>
+                        <h1 className=''>{name}</h1>
+                        {/* <p>je sui vraiment ct</p> */}
+                      </div>
+                      <Link href="/items"
+                        className='class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"'
+                      >View</Link>
+                      <button onClick={(e) => {
+                        e.preventDefault
+                        handleDelete(name)
+                      }}
+                        className='type="button" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900'
+                      >Delete</button>
+                    </div>
+                  )
+                })
+                  : ''
+              }
+            </div>
           </div>
-          <ul>
-            {items.map(({ id, title, description }) => (
-              <div key={id}>
-                <h1>{title}</h1>
-                <p>{description}</p>
-                <button>Delete</button>
-              </div>
-            ))}
-          </ul>
         </div>
       </main>
     </>
