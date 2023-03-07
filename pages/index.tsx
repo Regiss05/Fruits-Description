@@ -18,7 +18,7 @@ export default function Home() {
   const addName = () => {
     if (userInput) {
       setNameList([
-        // userInput,
+        userInput,
         ...nameList,
       ])
 
