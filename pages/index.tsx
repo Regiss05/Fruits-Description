@@ -7,6 +7,7 @@ import SearchBar from './SearchBar';
 export default function Home() {
   const [userInput, setUserInput] = useState('');
   const [nameList, setNameList] = useState([]);
+  const usertype = userInput
 
   const handleChange = (e: { preventDefault: () => void; target: { value: SetStateAction<string>; }; }) => {
     e.preventDefault()
@@ -17,8 +18,8 @@ export default function Home() {
   const addName = () => {
     if (userInput) {
       setNameList([
-        userInput,
-        ...nameList
+        // userInput,
+        ...nameList,
       ])
 
       setUserInput('')
