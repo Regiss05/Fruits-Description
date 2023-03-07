@@ -89,13 +89,6 @@ export default function Home() {
         <div className="flex flex-col justify-center items-center">
           <div className='w-2/4 text-center bg-primary'>
             <div className="container">
-              {/* <input
-                type="search"
-                value={name}
-                onChange={filter}
-                className="input"
-                placeholder="Filter"
-              /> */}
               <form>
                 <label htmlFor="default-search" className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
                 <div className="relative">
@@ -114,7 +107,7 @@ export default function Home() {
                 </div>
               </form>
 
-              <div className="user-list">
+              {/* <div className="user-list">
                 {foundUsers && foundUsers.length > 0 ? (
                   foundUsers.map((user) => (
                     <li key={user.id} className="user">
@@ -124,7 +117,7 @@ export default function Home() {
                 ) : (
                   <h1>No results found!</h1>
                 )}
-              </div>
+              </div> */}
             </div>
             {/* <SearchBar /> */}
             <h1 className='text-2xl my-5'>ADD STOCK</h1>
@@ -156,38 +149,51 @@ export default function Home() {
           <h1 className='font-bold my-5'>FRUITS SPECIFICATIONS</h1>
           <div className='flex flex-wrap justify-center'>
             {
-              nameList.map((list, idx) => {
-                return (
-                  <div className="card-w rounded overflow-hidden shadow-lg mr-2 mt-2">
-                    <img className="w-full h-40" src="https://thumbs.dreamstime.com/z/fresh-fruits-assorted-colorful-clean-eating-fruit-background-138466607.jpg" alt="Sunset in the mountains" />
-                    <div className="px-6 py-4" key={idx}>
-                      <div className="font-bold text-xl mb-2 uppercase">{list.name}</div>
-                      <p className="font-thin text-xs px-5">
-                        {list.description}
-                      </p>
-                    </div>
-                    <div className="px-6 mb-4">
-                      <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#Enjoy</span>
-                      <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#Quality</span>
-                      <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#Health</span>
-                      <div>
-                        <Link href="/items"
-                          className='class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"'
-                          key={idx}
-
-                        >View</Link>
-                        <button onClick={(e) => {
-                          e.preventDefault
-                          handleDelete(list)
-                        }}
-                          className='type="button" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900'
-                        >Delete</button>
+              // {foundUsers && foundUsers.length > 0 ? (
+              //   foundUsers.map((user) => (
+              //     <li key={user.id} className="user">
+              //       <span className="user-name">{user.name}</span>
+              //     </li>
+              //   ))
+              // ) : (
+              //   <h1>No results found!</h1>
+              // )}
+              foundUsers && foundUsers.length > 0 ? (
+                foundUsers.map((list, idx) => {
+                  return (
+                    <div className="card-w rounded overflow-hidden shadow-lg mr-2 mt-2">
+                      <img className="w-full h-40" src="https://thumbs.dreamstime.com/z/fresh-fruits-assorted-colorful-clean-eating-fruit-background-138466607.jpg" alt="Sunset in the mountains" />
+                      <div className="px-6 py-4" key={idx}>
+                        <div className="font-bold text-xl mb-2 uppercase">{list.name}</div>
+                        <p className="font-thin text-xs px-5">
+                          {list.description}
+                        </p>
                       </div>
+                      <div className="px-6 mb-4">
+                        <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#Enjoy</span>
+                        <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#Quality</span>
+                        <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#Health</span>
+                        <div>
+                          <Link href="/items"
+                            className='class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"'
+                            key={idx}
 
+                          >View</Link>
+                          <button onClick={(e) => {
+                            e.preventDefault
+                            handleDelete(list)
+                          }}
+                            className='type="button" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900'
+                          >Delete</button>
+                        </div>
+
+                      </div>
                     </div>
-                  </div>
-                )
-              })
+                  )
+                })
+              ) : (
+                <h1>No results found!</h1>
+              )
             }
           </div>
         </div>
