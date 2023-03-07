@@ -13,19 +13,6 @@ export default function Home() {
 
 
   const [name, setName] = useState('');
-
-  // const USERS = [
-  //   { id: 1, name: 'Andy', age: 32 },
-  //   { id: 2, name: 'Bob', age: 30 },
-  //   { id: 3, name: 'Tom Hulk', age: 40 },
-  //   { id: 4, name: 'Tom Hank', age: 50 },
-  //   { id: 5, name: 'Audra', age: 30 },
-  //   { id: 6, name: 'Anna', age: 68 },
-  //   { id: 7, name: 'Tom', age: 34 },
-  //   { id: 8, name: 'Tom Riddle', age: 28 },
-  //   { id: 9, name: 'Bolo', age: 23 },
-  // ];
-
   const [nameList, setNameList] = useState([
     {
       id: '123',
@@ -37,18 +24,16 @@ export default function Home() {
 
   const [foundUsers, setFoundUsers] = useState(nameList);
 
-  const filter = (e) => {
+  const filter = (e: { target: { value: any; }; }) => {
     const keyword = e.target.value;
 
     if (keyword !== '') {
       const results = nameList.filter((user) => {
         return user.name.toLowerCase().startsWith(keyword.toLowerCase());
-        // Use the toLowerCase() method to make it case-insensitive
       });
       setFoundUsers(results);
     } else {
       setFoundUsers(nameList);
-      // If the text field is empty, show all users
     }
 
     setName(keyword);
@@ -72,7 +57,7 @@ export default function Home() {
   }
 
   const handleDelete = (list: { id: string; name: string; description: string; }) => {
-    const updatedNames = nameList.filter((currentName, idx) => nameList.indexOf(currentName) != nameList.indexOf(list))
+    const updatedNames = foundUsers.filter((currentName, idx) => foundUsers.indexOf(currentName) != foundUsers.indexOf(list))
 
     setNameList(updatedNames)
   }
@@ -106,20 +91,7 @@ export default function Home() {
                   <button type="submit" className="text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button>
                 </div>
               </form>
-
-              {/* <div className="user-list">
-                {foundUsers && foundUsers.length > 0 ? (
-                  foundUsers.map((user) => (
-                    <li key={user.id} className="user">
-                      <span className="user-name">{user.name}</span>
-                    </li>
-                  ))
-                ) : (
-                  <h1>No results found!</h1>
-                )}
-              </div> */}
             </div>
-            {/* <SearchBar /> */}
             <h1 className='text-2xl my-5'>ADD STOCK</h1>
             <div>
               <input type="text"
@@ -149,15 +121,6 @@ export default function Home() {
           <h1 className='font-bold my-5'>FRUITS SPECIFICATIONS</h1>
           <div className='flex flex-wrap justify-center'>
             {
-              // {foundUsers && foundUsers.length > 0 ? (
-              //   foundUsers.map((user) => (
-              //     <li key={user.id} className="user">
-              //       <span className="user-name">{user.name}</span>
-              //     </li>
-              //   ))
-              // ) : (
-              //   <h1>No results found!</h1>
-              // )}
               foundUsers && foundUsers.length > 0 ? (
                 foundUsers.map((list, idx) => {
                   return (
