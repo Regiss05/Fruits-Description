@@ -1,6 +1,6 @@
 import React from 'react'
 
-const SearchBar = ({posts, setSearchResult}) => {
+const SearchBar = () => {
     const handleSubmit = (e) => e.preventDefault()
 
     const handleSearchChange = (e) => {
