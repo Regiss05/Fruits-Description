@@ -7,3 +7,8 @@
         @apply bg-[#F0F2F5]
     }
 }
+
+.elem-item {
+    /* background-color: red; */
+    transition: all ease-in-out 2s;
+}
