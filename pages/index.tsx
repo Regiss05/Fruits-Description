@@ -12,17 +12,6 @@ export default function Home() {
   const [userInput, setUserInput] = useState('');
   const [desInput, setDesInput] = useState('');
 
-
-  const [name, setName] = useState('');
-  const [nameList, setNameList] = useState([
-    {
-      id: '123',
-      name: 'Orange',
-      description: 'An orange is a fruit of various citrus species in the family Rutaceae (see list of plants known as orange); it primarily refers to Citrus × sinensis,[1] which is also called sweet orange, to distinguish it from the related Citrus × aurantium, referred to as bitter orange. '
-    }
-
-  ]);
-
   const itemContext = React.useContext(ItemContextData);
 
   const [search, setSearch] = useState('');
@@ -119,7 +108,7 @@ export default function Home() {
               </button>
             </div>
           </div>
-          <h1 className='font-bold my-5 animate-bounce'>FRUITS SPECIFICATIONS</h1>
+          <h1 className='font-bold my-5'>FRUITS SPECIFICATIONS</h1>
           <div className='flex flex-wrap justify-center'>
             {
               foundUsers && foundUsers.length > 0 ? (
