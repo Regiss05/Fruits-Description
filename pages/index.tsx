@@ -1,14 +1,16 @@
 /* eslint-disable react/jsx-key */
 // eslint-disable-next-line
-
+import React from 'react';
 import Head from 'next/head'
 import { useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 import Link from 'next/link';
+import ItemContext, { ItemContextData }  from '@/context/itemContext';
+import { useRouter } from 'next/router';
 
 export default function Home() {
   const [userInput, setUserInput] = useState('');
-  const [desInput, setDesInput] = useState('')
+  const [desInput, setDesInput] = useState('');
 
 
   const [name, setName] = useState('');
@@ -21,6 +23,8 @@ export default function Home() {
 
   ]);
 
+  const itemContext = React.useContext(ItemContextData);
+
   const [search, setSearch] = useState('');
 
   const filter = (e: { target: { value: any; }; }) => {
@@ -30,13 +34,13 @@ export default function Home() {
 
   const addName = () => {
     if (userInput && desInput) {
-      setNameList([
+      itemContext.setItems([
         {
           id: uuidv4(),
           name: userInput,
           description: desInput,
         },
-        ...nameList,
+        ...itemContext.items,
       ])   
 
       setUserInput('')
@@ -45,17 +49,19 @@ export default function Home() {
 
   }
 
-  const handleDelete = (list: { id: string; name: string; description: string; }) => {
-    const updatedNames = foundUsers.filter((currentName, idx) => foundUsers.indexOf(currentName) != foundUsers.indexOf(list))
+  const router = useRouter();
 
-    setNameList(updatedNames)
+  const handleDelete = (list: { id: string; name: string; description: string; }) => {
+    const updatedNames = itemContext.items.filter((currentName, idx) => itemContext.items.indexOf(currentName) != itemContext.items.indexOf(list))
+
+    itemContext.setItems(updatedNames)
   }
 
-  let foundUsers = nameList.filter((user) => {
+  let foundUsers = itemContext.items.filter((user) => {
     return user.name.toLowerCase().startsWith(search.toLowerCase());
   });
 
-  if(search.length < 1) foundUsers = nameList;
+  if(search.length < 1) foundUsers = itemContext.items;
 
   return (
     <>
@@ -87,7 +93,7 @@ export default function Home() {
                 </div>
               </form>
             </div>
-            <h1 className='text-2xl my-5'>ADD STOCK</h1>
+            <h1 className='text-2xl my-5 animate-ping'>ADD ITEM</h1>
             <div>
               <input type="text"
                 value={userInput}
@@ -113,7 +119,7 @@ export default function Home() {
               </button>
             </div>
           </div>
-          <h1 className='font-bold my-5'>FRUITS SPECIFICATIONS</h1>
+          <h1 className='font-bold my-5 animate-bounce'>FRUITS SPECIFICATIONS</h1>
           <div className='flex flex-wrap justify-center'>
             {
               foundUsers && foundUsers.length > 0 ? (
@@ -132,11 +138,13 @@ export default function Home() {
                         <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#Quality</span>
                         <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#Health</span>
                         <div>
-                          <Link href="/items"
-                            className='class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"'
-                            key={idx}
-
-                          >View</Link>
+                          <button onClick={(e) => {
+                            e.preventDefault
+                            itemContext.setSelectedItem(list);
+                            router.push('/items');
+                          }} 
+                          className='focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800'
+                          > View Details </button>
                           <button onClick={(e) => {
                             e.preventDefault
                             handleDelete(list)
